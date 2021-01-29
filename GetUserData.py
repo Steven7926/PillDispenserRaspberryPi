@@ -54,5 +54,5 @@ class GetUserData:
         # Get the current system date
 
         now = datetime.now()
-        currentDate = now.strftime("%b %d, %Y")
+        currentDate = now.strftime("%m %d, %Y")
         return currentDate

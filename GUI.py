@@ -1,12 +1,29 @@
-import tkinter as tk
-from tkinter import *  
-import json
-from time import strftime 
+from tkinter import *
+from tkinter.ttk import *
 from PIL import ImageTk,Image  
 from GetUserData import GetUserData
 
+import datetime
+import json
+
+
 # Begin Initial Window
-window = tk.Tk(className = 'Magic Meds')
+window = Tk(className = 'Magic Meds')
+datelabel = Label(background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+timelabel = Label(background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+
+def clock():
+    dateTime = datetime.datetime.now().strftime("%b %d, %Y  %H:%M:%S/%p")
+    date,time1 = dateTime.split("  ")
+    time2,time3 = time1.split('/')
+    hour,minutes,seconds =  time2.split(':')
+    if int(hour) > 12 and int(hour) < 24:
+            time = str(int(hour) - 12) + ':' + minutes + ':' + seconds + ' ' + time3
+    else:
+            time = time2 + ' ' + time3
+    timelabel.config(text = time)
+    datelabel.config(text = date)
+    timelabel.after(1000, clock)
 
 def checkSignup():
 
@@ -18,7 +35,7 @@ def checkSignup():
 
 def getUserInfoScreen():
 	window.destroy()
-	windowNext = tk.Tk(className = 'Magic Meds')
+	windowNext = Tk(className = 'Magic Meds')
 	user = GetUserData.userdata()
 
 
@@ -32,19 +49,25 @@ def makeInitWindow():
 	timel = GetUserData.getSystemTime()
 
 	if (user == 0):
-		greeting = tk.Label(text= "Hello! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
-		greetingnext = tk.Label(text= "Please sign up on the mobile app before preceeding.", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
-		greetingafter = tk.Label(text= "Press the button below when you have signed up.", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
-		A = tk.Button(window, text ="I have signed up!", command = checkSignup)
-
+		greeting = Label(text= "Hello! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
 		greeting.place(relx = 0.5, rely = 0.3, anchor = 'center')
+
+		greetingnext = Label(text= "Please sign up on the mobile app before preceeding.", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
 		greetingnext.place(relx = 0.5, rely = 0.4, anchor = 'center')
+
+		greetingafter = Label(text= "Press the button below when you have signed up.", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
 		greetingafter.place(relx = 0.5, rely = 0.5, anchor = 'center')
 
+		A = tk.Button(window, text ="I have signed up!", command = checkSignup)
 		A.place(relx = 0.5, rely = 0.6, anchor = 'center')
 
+		datelabel.place(relx = 0.1, rely = 0.04, anchor = 'center')
+		timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
+
+		clock()
+
 	else: 
-		greeting = tk.Label(text= "Hello " + user['FirstName'] + "! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 25 bold")
+		greeting = Label(text= "Hello " + user['FirstName'] + "! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 25 bold")
 		greeting.place(relx = 0.5, rely = 0.5, anchor = 'center')
 
 		canvas = Canvas(window, width = 90, height = 90, background = "#1e3f66", highlightthickness=0)  
@@ -52,18 +75,15 @@ def makeInitWindow():
 		img = ImageTk.PhotoImage(Image.open("icon.png"))
 		canvas.create_image(50, 50, anchor = 'center', image = img)
 
-		A = tk.Button(window, text ="Continue", command = getUserInfoScreen)
+		A = Button(window, text ="Continue", command = getUserInfoScreen)
 		A.place(relx = 0.5, rely = 0.6, anchor = 'center')
 
-		datelabel = tk.Label(text = date, background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
-		datelabel.place(relx = 0.1, rely = 0.04, anchor = 'center')
-
-
-		timelabel = tk.Label(text = timel, background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
-		timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
 		
+		datelabel.place(relx = 0.1, rely = 0.04, anchor = 'center')
+		timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
 
-
+		clock()
+		
 
 	# This removes the window resize, minimize, and close. 
 	# This will only be uncommented when we have an MVP
