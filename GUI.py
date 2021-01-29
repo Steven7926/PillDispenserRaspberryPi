@@ -1,10 +1,12 @@
 import tkinter as tk
+from tkinter import *  
 import json
+from time import strftime 
+from PIL import ImageTk,Image  
 from GetUserData import GetUserData
 
-# Begin Window 
+# Begin Initial Window
 window = tk.Tk(className = 'Magic Meds')
-user = GetUserData.userdata()
 
 def checkSignup():
 
@@ -12,13 +14,22 @@ def checkSignup():
 	if (user == 0):
 		window.destroy()
 	else:
-		window.destroy()
-		print("success")
+		getUserInfoScreen
+
+def getUserInfoScreen():
+	window.destroy()
+	windowNext = tk.Tk(className = 'Magic Meds')
+	user = GetUserData.userdata()
 
 
+	windowNext.mainloop()
+	
 
-def makeWindow():
+def makeInitWindow():
 
+	user = GetUserData.userdata()
+	date = GetUserData.getSystemDate()
+	timel = GetUserData.getSystemTime()
 
 	if (user == 0):
 		greeting = tk.Label(text= "Hello! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 20 bold")
@@ -34,10 +45,23 @@ def makeWindow():
 
 	else: 
 		greeting = tk.Label(text= "Hello " + user['FirstName'] + "! Welcome to Magic Meds!", background = "#1e3f66", foreground = "white", font = "Arial 25 bold")
-		A = tk.Button(window, text ="Continue", command = window.destroy)
-
 		greeting.place(relx = 0.5, rely = 0.5, anchor = 'center')
+
+		canvas = Canvas(window, width = 90, height = 90, background = "#1e3f66", highlightthickness=0)  
+		canvas.place(relx=0.45, rely=0.2)  
+		img = ImageTk.PhotoImage(Image.open("icon.png"))
+		canvas.create_image(50, 50, anchor = 'center', image = img)
+
+		A = tk.Button(window, text ="Continue", command = getUserInfoScreen)
 		A.place(relx = 0.5, rely = 0.6, anchor = 'center')
+
+		datelabel = tk.Label(text = date, background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+		datelabel.place(relx = 0.1, rely = 0.04, anchor = 'center')
+
+
+		timelabel = tk.Label(text = timel, background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+		timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
+		
 
 
 
@@ -49,4 +73,4 @@ def makeWindow():
 
 	window.mainloop()
 
-makeWindow()
+makeInitWindow()
