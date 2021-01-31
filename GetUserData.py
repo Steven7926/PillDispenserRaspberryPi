@@ -5,11 +5,9 @@ import json
 
 class GetUserData:
 
-    global userid
-
     #Product Code is hard coded value that is machine specific
     global productCode 
-    productCode = '8901'
+    productCode = '890'
 
     # Make connection to DB and Cluser
     global client 
@@ -27,21 +25,14 @@ class GetUserData:
         if (usercount == 0):
             return 0
 
-        userid = str(user["_id"])
-
         return user
-
-    def getCaregivers():
-        # Get the Users Caregivers
-        usersCaregivers = db.Caregivers.find({'UserId': userid})
-
-        return usersCaregivers
         
-    def getMedications():
+    def getMedications(userid):
          # Get the Users Medications
-         usersMedication = db.Medications.find ({'UserId': userid})
+         usersMedication = db.Medications.find({'UserId': userid})
+         meds = list(usersMedication)
 
-         return usersMedication
+         return meds
 
     def getSystemTime():
         # Get the current system time
