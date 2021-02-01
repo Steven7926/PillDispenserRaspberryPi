@@ -12,16 +12,37 @@ def clock():
     date,time1 = dateTime.split("  ")
     time2,time3 = time1.split('/')
     hour,minutes,seconds =  time2.split(':')
+
     if int(hour) > 12 and int(hour) < 24:
             time = str(int(hour) - 12) + ':' + minutes + ':' + seconds + ' ' + time3
     else:
             time = time2 + ' ' + time3
+
     timelabel.config(text = time)
     datelabel.config(text = date)
     timelabel.after(1000, clock)
 
 def converttwentyfourhour(time):
+	hour,minutes,seconds =  time.split(':')
+
+	if int(hour) > 12 and int(hour) < 24:
+		time = str(int(hour) - 12) + ':' + minutes + ' PM'
+	elif int(hour) == 0:
+		time = '12' + ':' + minutes + ' AM'
+	elif int(hour) == 12:
+		time = '12' + ':' + minutes + ' PM'
+
 	return time
+
+def isDayOfWeek(dayOfWeek):
+	dateTime = datetime.datetime.now()
+	day = str(dateTime.strftime("%A"))
+	print(day)
+
+	if (dayOfWeek == day ):
+		return 1
+	else:
+		return 0
 
 
 
@@ -53,15 +74,34 @@ def getUserInfoScreen():
 	medBox.place(relx=0.02, rely=0.2)
 
 	initialxPlacement = 0.05
-	initialyPlacement = 0.25
+	initialyPlacement = 0.32
+
+	initxPlaceNext = 0.56
+	inityPlaceNext = 0.118
 
 	for i in medicationSchedule:
 		timeTaken = i['TimeTaken']
 		dayTaken = i['DayTaken']
 		medName = i['MedicationName']
-		medName = Label(text= medName + " taken every " + dayTaken + " at " + converttwentyfourhour(timeTaken) , background = "#1e3f66", foreground = "white", font = "Arial 10 bold")
-		medName.place(relx = initialxPlacement, rely = initialyPlacement, anchor = 'w')
+		medNames = Label(text= medName + " taken every " + dayTaken + " at " + converttwentyfourhour(timeTaken) , background = "#1e3f66", foreground = "white", font = "Arial 10 bold")
+		medNames.place(relx = initialxPlacement, rely = initialyPlacement, anchor = 'w')
+
+		# Figure out if the pill drops today
+		isDay = isDayOfWeek(dayTaken)
+		if isDay == 1:
+			label =  Label(text= medName + " taken every " + dayTaken + " at " + converttwentyfourhour(timeTaken) , background = "#1e3f66", foreground = "white", font = "Arial 10 bold")
+			label.place(relx = initxPlaceNext, rely = inityPlaceNext, anchor = 'w')
+
 		initialyPlacement += 0.05
+		inityPlaceNext += 0.05
+
+	weeklySched = Label(text= "Weekly Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+	weeklySched.place(relx = 0.22, rely = 0.25, anchor = 'center')
+
+	upNext = Label(text= "Pill(s) Dropping Today", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+	upNext.place(relx = 0.74, rely = 0.25, anchor = 'center')
+
+	
 
 
 
