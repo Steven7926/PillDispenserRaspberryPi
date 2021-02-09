@@ -7,7 +7,7 @@ class GetUserData:
 
     #Product Code is hard coded value that is machine specific
     global productCode 
-    productCode = '890'
+    productCode = '123456789'
 
     # Make connection to DB and Cluser
     global client 

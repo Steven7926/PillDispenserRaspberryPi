@@ -3,6 +3,8 @@ from tkinter.ttk import *
 from PIL import ImageTk,Image  
 from GetUserData import GetUserData
 
+import schedule
+import time
 import datetime
 import json
 
@@ -23,7 +25,7 @@ def clock():
     timelabel.after(1000, clock)
 
 def converttwentyfourhour(time):
-	hour,minutes,seconds =  time.split(':')
+	hour,minutes =  time.split(':')
 
 	if int(hour) > 12 and int(hour) < 24:
 		time = str(int(hour) - 12) + ':' + minutes + ' PM'
@@ -44,9 +46,6 @@ def isDayOfWeek(dayOfWeek):
 	else:
 		return 0
 
-
-
-
 def checkSignup():
 
 	user = GetUserData.userdata()
@@ -64,7 +63,6 @@ def getUserInfoScreen():
 	greeting.place_forget()
 	A.place_forget()
 	canvas.place_forget()
-
 	canvas.place(relx=0.62, rely=0.004)
 
 	usersName = Label(text= user['FirstName'] + " " + user['LastName'] + "s " + "Pill Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
@@ -77,7 +75,7 @@ def getUserInfoScreen():
 	initialyPlacement = 0.32
 
 	initxPlaceNext = 0.56
-	inityPlaceNext = 0.118
+	inityPlaceNext = 0.32
 
 	for i in medicationSchedule:
 		timeTaken = i['TimeTaken']
@@ -100,13 +98,6 @@ def getUserInfoScreen():
 
 	upNext = Label(text= "Pill(s) Dropping Today", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
 	upNext.place(relx = 0.74, rely = 0.25, anchor = 'center')
-
-	
-
-
-
-
-
 
 
 
@@ -151,7 +142,7 @@ else:
 	A.place(relx = 0.5, rely = 0.6, anchor = 'center')
 
 		
-	datelabel.place(relx = 0.14, rely = 0.04, anchor = 'center')
+	datelabel.place(relx = 0.16, rely = 0.04, anchor = 'center')
 	timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
 
 	clock()
