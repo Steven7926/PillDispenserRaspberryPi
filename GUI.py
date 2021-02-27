@@ -8,6 +8,7 @@ import time
 import datetime
 import json
 
+
 def clock():
     dateTime = datetime.datetime.now().strftime("%A, %b %d, %Y  %H:%M:%S/%p")
     date,time1 = dateTime.split("  ")
@@ -88,6 +89,7 @@ def updateMeds():
 	initxPlaceNext = 0.56
 	inityPlaceNext = 0.32
 
+	
 	for i in medicationSchedule:
 		timeTaken = i['TimeTaken']
 		dayTaken = i['DayTaken']
@@ -103,6 +105,12 @@ def updateMeds():
 
 		initialyPlacement += 0.05
 		inityPlaceNext += 0.05
+
+	for i in medicationSchedule:
+		medNames.pack_forget()
+
+
+	
 
 	window.after(1500, updateMeds)
 
