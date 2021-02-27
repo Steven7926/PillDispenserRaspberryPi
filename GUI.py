@@ -8,7 +8,6 @@ import time
 import datetime
 import json
 
-
 def clock():
     dateTime = datetime.datetime.now().strftime("%A, %b %d, %Y  %H:%M:%S/%p")
     date,time1 = dateTime.split("  ")
@@ -39,7 +38,6 @@ def converttwentyfourhour(time):
 def isDayOfWeek(dayOfWeek):
 	dateTime = datetime.datetime.now()
 	day = str(dateTime.strftime("%A"))
-	print(day)
 
 	if (dayOfWeek == day ):
 		return 1
@@ -71,6 +69,19 @@ def getUserInfoScreen():
 	medBox = Canvas(window, width = 765, height = 365, background = "#1e3f66", highlightthickness=2, highlightcolor = "#c66156")  
 	medBox.place(relx=0.02, rely=0.2)
 
+	weeklySched = Label(text= "Weekly Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+	weeklySched.place(relx = 0.22, rely = 0.25, anchor = 'center')
+
+	upNext = Label(text= "Pill(s) Dropping Today", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+	upNext.place(relx = 0.74, rely = 0.25, anchor = 'center')
+
+	window.after_idle(updateMeds)
+	
+def updateMeds():
+
+	medicationSchedule = GetUserData.getMedications(str(user["_id"]))
+	amountOfMeds = len(medicationSchedule)
+
 	initialxPlacement = 0.05
 	initialyPlacement = 0.32
 
@@ -93,11 +104,7 @@ def getUserInfoScreen():
 		initialyPlacement += 0.05
 		inityPlaceNext += 0.05
 
-	weeklySched = Label(text= "Weekly Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
-	weeklySched.place(relx = 0.22, rely = 0.25, anchor = 'center')
-
-	upNext = Label(text= "Pill(s) Dropping Today", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
-	upNext.place(relx = 0.74, rely = 0.25, anchor = 'center')
+	window.after(1500, updateMeds)
 
 
 
@@ -153,6 +160,7 @@ else:
 #window.overrideredirect(1)
 window.geometry('{}x{}'.format(800, 480))
 window.configure(bg = '#1e3f66')
-
 window.mainloop()
+
+
 	
