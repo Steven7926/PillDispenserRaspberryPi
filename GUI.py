@@ -109,9 +109,6 @@ def updateMeds():
 	for i in medicationSchedule:
 		medNames.pack_forget()
 
-
-	
-
 	window.after(1500, updateMeds)
 
 
