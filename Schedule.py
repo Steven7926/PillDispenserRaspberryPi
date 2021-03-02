@@ -20,6 +20,7 @@ def job():
 
 def sendData():
 	print("Do they match: yes")
+	## Send Data to Atmega using SPI to turn the motor
 
 schedule.every(1).seconds.do(job)
 
