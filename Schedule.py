@@ -14,11 +14,12 @@ def job():
 		print("MedicationTime: " + medTime)
 		print("Current Date: " + currentDate)
 		if (currentDate == medTime):
-			print("Do they match: yes")
+			sendData()
 		else:
 			print("Do they match: no");
 
-
+def sendData():
+	print("Do they match: yes")
 
 schedule.every(1).seconds.do(job)
 
