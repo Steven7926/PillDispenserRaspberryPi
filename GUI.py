@@ -7,6 +7,15 @@ import schedule
 import time
 import datetime
 import json
+import sys
+import os
+
+def restart_program():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 
 def clock():
@@ -48,10 +57,8 @@ def isDayOfWeek(dayOfWeek):
 def checkSignup():
 
 	user = GetUserData.userdata()
-	if (user == 0):
-		window.destroy()
-	else:
-		getUserInfoScreen
+	restart_program()
+
 
 def getUserInfoScreen():
 	
@@ -64,7 +71,7 @@ def getUserInfoScreen():
 	canvas.place_forget()
 	canvas.place(relx=0.62, rely=0.004)
 
-	usersName = Label(text= user['FirstName'] + " " + user['LastName'] + "s " + "Pill Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+	usersName = Label(text= user['FirstName'] + " " + user['LastName'] + "'s " + "Pill Schedule", background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
 	usersName.place(relx = 0.455, rely = 0.1, anchor = 'center')
 
 	medBox = Canvas(window, width = 765, height = 365, background = "#1e3f66", highlightthickness=2, highlightcolor = "#c66156")  
@@ -102,12 +109,9 @@ def updateMeds():
 		if isDay == 1:
 			label =  Label(text= medName + " taken every " + dayTaken + " at " + converttwentyfourhour(timeTaken) , background = "#1e3f66", foreground = "white", font = "Arial 10 bold")
 			label.place(relx = initxPlaceNext, rely = inityPlaceNext, anchor = 'w')
+			inityPlaceNext += 0.05
 
 		initialyPlacement += 0.05
-		inityPlaceNext += 0.05
-
-	for i in medicationSchedule:
-		medNames.pack_forget()
 
 	window.after(1500, updateMeds)
 
