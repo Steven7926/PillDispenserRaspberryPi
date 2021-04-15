@@ -33,6 +33,15 @@ def clock():
     datelabel.config(text = date)
     timelabel.after(1000, clock)
 
+def countdown(seconds):
+	if seconds == 0:
+		getUserInfoScreen()
+	else:
+		seconds = seconds-1
+		countdownlabel.config(text = seconds)
+		countdownlabel.after(1000, countdown(seconds))
+	
+
 def converttwentyfourhour(time):
 	hour,minutes =  time.split(':')
 
@@ -121,6 +130,7 @@ def updateMeds():
 window = Tk(className = 'Magic Meds')
 datelabel = Label(background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
 timelabel = Label(background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
+countdownlabel = Label(background = "#1e3f66", foreground = "white", font = "Arial 15 bold")
 
 
 user = GetUserData.userdata()
@@ -161,6 +171,8 @@ else:
 	datelabel.place(relx = 0.16, rely = 0.04, anchor = 'center')
 	timelabel.place(relx = 0.9, rely = 0.04, anchor = 'center')
 
+	countdownlabel.place(relx = 0.76, rely = 0.04, anchor = 'center')
+	countdown(0);
 	clock()
 		
 
