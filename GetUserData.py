@@ -11,7 +11,7 @@ class GetUserData:
 
     # Make connection to DB and Cluser
     global client 
-    client = MongoClient('mongodb+srv://Steven:XO9V<Bpf)bGCNfKEX.6P0h!Z@cluster0.tjzfa.mongodb.net/MedMaster?retryWrites=true&w=majority')
+    client = MongoClient('DB Connection String Goes Here')
 
     global db 
     db = client.MedMaster
