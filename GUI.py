@@ -51,6 +51,8 @@ def converttwentyfourhour(time):
 		time = '12' + ':' + minutes + ' AM'
 	elif int(hour) == 12:
 		time = '12' + ':' + minutes + ' PM'
+	elif int(hour) < 12 and int(hour) > 0:
+		time = str(int(hour)) + ':' + minutes + ' AM'
 
 	return time
 
